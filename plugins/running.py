@@ -47,9 +47,10 @@ async def run(bot, message):
             )
             files_count += 1
             await asyncio.sleep(1)
-            print(f"Total Forwarded : {files_count}\nNow Forwarded: {file_name}")
+            new_skip_NO=str(int(Config.SKIP_NO)+int(files_count))
+            print(f"Total Forwarded : {files_count}\nNow Forwarded: {file_name}\nCurrent SKIP_NO: {new_skip_NO}") 
             try:
-                await m.edit(text=f"Total Forwarded : {files_count}\nNow Forwarded: {file_name}")
+                await m.edit(text=f"Total Forwarded : <code>{files_count}</code>\nCurrent SKIP_NO:<code>{new_skip_NO}</code>\nNow Forwarded: <code>{file_name}</code>")
             except FloodWait as e:
                 await asyncio.sleep(e.x)
             except Exception as e:
