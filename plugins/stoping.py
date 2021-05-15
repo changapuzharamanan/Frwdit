@@ -6,12 +6,11 @@ import os
 import sys
 import asyncio
 from pyrogram import Client, filters
-from pyrogram.types import CallbackQuery
+from pyrogram.types import CallbackQuery, Message
 
-@Client.on_callback_query(filters.regex(r'^stop_btn$'))
-async def stop_button(c: Client, cb: CallbackQuery):
+@Client.on_message(filters.command(stop))
+async def stop_button(c: Client, cb: Message):
     await cb.message.delete()
-    await cb.answer()
     msg = await c.send_message(
         text="<i>Trying To Stoping.....</i>",
         chat_id=cb.message.chat.id
