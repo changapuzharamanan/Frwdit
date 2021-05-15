@@ -10,10 +10,10 @@ from config import Config
 from translation import Translation
 import os 
 import sys
+from user import User
 FROM = Config.FROM_CHANNEL
 TO = Config.TO_CHANNEL
 FILTER = Config.FILTER_TYPE
-
 
 @Client.on_message(filters.command("stop"))
 async def stop_button(bot, message):
@@ -47,19 +47,18 @@ async def run(bot, message):
         try:
             if message.video:
                 file_name = message.video.file_name
+                file_id = message.video.file_id
             elif message.document:
                 file_name = message.document.file_name
+                file_id = message.document.file_id
             elif message.audio:
                 file_name = message.audio.file_name
+                file_id = message.audio.file_id
             else:
+                file_id = None
                 file_name = None
-            await bot.copy_message(
-                chat_id=TO,
-                from_chat_id=FROM,
-                parse_mode="md",       
-                caption=Translation.CAPTION.format(file_name),
-                message_id=message.message_id
-            )
+            message = await bot.get_messages(FROM, message.message_id)
+            await bot.send_cached_media(TO, file_id)
             files_count += 1
             await asyncio.sleep(1)
             new_skip_NO=str(int(Config.SKIP_NO)+int(files_count))
@@ -87,3 +86,4 @@ async def run(bot, message):
         reply_markup=reply_markup
     )
         
+
