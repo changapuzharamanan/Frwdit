@@ -8,11 +8,26 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQ
 from pyrogram.errors import FloodWait
 from config import Config
 from translation import Translation
-
+import os 
+import sys
 FROM = Config.FROM_CHANNEL
 TO = Config.TO_CHANNEL
 FILTER = Config.FILTER_TYPE
 
+
+@Client.on_message(filters.command("stop"))
+async def stop_button(bot, message):
+    if str(message.from_user.id) not in Config.OWNER_ID:
+        return
+    msg = await bot.send_message(
+        text="<i>Trying To Stoping.....</i>",
+        chat_id=message.chat.id
+    )
+    await asyncio.sleep(5)
+    await msg.edit("<i>File Forword Stoped Successfully 👍</i>")
+    os.execl(sys.executable, sys.executable, *sys.argv)
+    
+ 
 @Client.on_message(filters.private & filters.command(["run"]))
 async def run(bot, message):
     if str(message.from_user.id) not in Config.OWNER_ID:
