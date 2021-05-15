@@ -47,7 +47,7 @@ async def run(bot, message):
             )
             files_count += 1
             await asyncio.sleep(1)
-            print(files_count)
+            print(f"Total Forwarded : {files_count}\nNow Forwarded: {file_name}")
             try:
                 await m.edit(text=f"Total Forwarded : {files_count}\nNow Forwarded: {file_name}")
             except FloodWait as e:
