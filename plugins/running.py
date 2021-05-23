@@ -68,19 +68,19 @@ async def run(bot, message):
                 await m.edit(text=f"Total Forwarded : <code>{files_count}</code>\nCurrent SKIP_NO:<code>{new_skip_NO}</code>\nNow Forwarded: <code>{file_name}</code>")
             except FloodWait as e:
                 await asyncio.sleep(e.x)
-                await bot.copy_message(
-                    chat_id=TO,
-                    from_chat_id=FROM,
-                    parse_mode="md",       
-                    caption=Translation.CAPTION.format(file_name),
-                    message_id=message.message_id
-                )
             except Exception as e:
                 print(e)
                 pass
                              
         except FloodWait as e:
             await asyncio.sleep(e.x)
+            await bot.copy_message(
+                chat_id=TO,
+                from_chat_id=FROM,
+                parse_mode="md",       
+                caption=Translation.CAPTION.format(file_name),
+                message_id=message.message_id
+            )
         except Exception as e:
             print(e)
             pass
